@@ -13,8 +13,14 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    # 테스트케이스 개발 전 기본
+    # def was_published_recently(self):
+    #     return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
+    # 테스트케이스 개발 (미래 시간으로 질문 생성)
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
 
 class Choice(models.Model):
