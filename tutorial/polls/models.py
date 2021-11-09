@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib import admin
 
 
 class Question(models.Model):
@@ -18,6 +19,16 @@ class Question(models.Model):
     #     return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
     # 테스트케이스 개발 (미래 시간으로 질문 생성)
+    # def was_published_recently(self):
+    #     now = timezone.now()
+    #     return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    # 커스터마이징
+    @admin.display(
+        boolean=True,
+        ordering='pub_date',
+        description='Published recently?',
+    )
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
